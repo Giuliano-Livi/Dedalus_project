@@ -1,0 +1,643 @@
+<?xml version='1.0' encoding='utf-8'?>
+<sdf version="1.9">
+  <world name="warehouse_px4">
+    <physics type="ode">
+      <max_step_size>0.004</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+      <real_time_update_rate>250</real_time_update_rate>
+    </physics>
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <atmosphere type="adiabatic" />
+    <scene>
+      <grid>true</grid>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>false</shadows>
+    </scene>
+
+    <gui fullscreen="0">
+      <camera name="user_camera">
+        <pose>-3.90827 -4.65526 12 0 0.9 0.728194</pose>
+        <view_controller>fps</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+
+    <model name="ground_plane">
+      <static>true</static>
+      <pose>5 0 0 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>70 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode />
+            </friction>
+            <bounce />
+            <contact />
+          </surface>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>70 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.8 0.8 0.8 1</ambient>
+            <diffuse>0.8 0.8 0.8 1</diffuse>
+            <specular>0.8 0.8 0.8 1</specular>
+          </material>
+        </visual>
+        <pose>5 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>5 0 0 0 -0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>5 0 0 0 -0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+
+    <light name="sunUTC" type="directional">
+      <pose>0 0 500 0 -0 0</pose>
+      <cast_shadows>true</cast_shadows>
+      <intensity>1</intensity>
+      <direction>0.001 0.625 -0.78</direction>
+      <diffuse>0.904 0.904 0.904 1</diffuse>
+      <specular>0.271 0.271 0.271 1</specular>
+      <attenuation>
+        <range>2000</range>
+        <linear>0</linear>
+        <constant>1</constant>
+        <quadratic>0</quadratic>
+      </attenuation>
+      <spot>
+        <inner_angle>0</inner_angle>
+        <outer_angle>0</outer_angle>
+        <falloff>0</falloff>
+      </spot>
+    </light>
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <world_frame_orientation>ENU</world_frame_orientation>
+      <latitude_deg>47.397971057728974</latitude_deg>
+      <longitude_deg> 8.546163739800146</longitude_deg>
+      <elevation>0</elevation>
+    </spherical_coordinates>
+
+
+
+
+
+    <!-- First row -->
+    <model name="ShelfF_01_111">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ShelfF_01</uri>
+      </include>
+      <pose>-28.5 -30 0 0 0 0</pose>
+    </model>
+
+    <model name="ShelfF_01_112">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ShelfF_01</uri>
+      </include>
+      <pose>-28.5 -10 0 0 0 0</pose>
+    </model>
+
+    <model name="ShelfF_01_113">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ShelfF_01</uri>
+      </include>
+      <pose>-28.5 10 0 0 0 0</pose>
+    </model>
+
+    <model name="ShelfF_01_114">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ShelfF_01</uri>
+      </include>
+      <pose>-28.5 30 0 0 0 0</pose>
+    </model>
+
+    <model name="ShelfF_01_121">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ShelfF_01</uri>
+      </include>
+      <pose>-25.5 -30 0 0 0 0</pose>
+    </model>
+
+    <model name="ShelfF_01_122">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ShelfF_01</uri>
+      </include>
+      <pose>-25.5 -10 0 0 0 0</pose>
+    </model>
+
+    <model name="ShelfF_01_123">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ShelfF_01</uri>
+      </include>
+      <pose>-25.5 10 0 0 0 0</pose>
+    </model>
+
+    <model name="ShelfF_01_124">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ShelfF_01</uri>
+      </include>
+      <pose>-25.5 30 0 0 0 0</pose>
+    </model>
+
+
+    <!-- Second row -->
+    <model name="ShelfF_01_211">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ShelfF_01</uri>
+      </include>
+      <pose>-12.5 -31.5 0 0 0 0</pose>
+    </model>
+
+    <model name="ShelfF_01_212">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ShelfF_01</uri>
+      </include>
+      <pose>-12.5 -11.5 0 0 0 0</pose>
+    </model>
+
+    <model name="ShelfF_01_213">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ShelfF_01</uri>
+      </include>
+      <pose>-12.5 11.5 0 0 0 0</pose>
+    </model>
+
+    <model name="ShelfF_01_214">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ShelfF_01</uri>
+      </include>
+      <pose>-12.5 31.5 0 0 0 0</pose>
+    </model>
+
+    <model name="ShelfF_01_221">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ShelfF_01</uri>
+      </include>
+      <pose>-9.5 -31.5 0 0 0 0</pose>
+    </model>
+
+    <model name="ShelfF_01_222">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ShelfF_01</uri>
+      </include>
+      <pose>-9.5 -11.5 0 0 0 0</pose>
+    </model>
+
+    <model name="ShelfF_01_223">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ShelfF_01</uri>
+      </include>
+      <pose>-9.5 11.5 0 0 0 0</pose>
+    </model>
+
+    <model name="ShelfF_01_224">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ShelfF_01</uri>
+      </include>
+      <pose>-9.5 31.5 0 0 0 0</pose>
+    </model>
+
+    <model name="ShelfF_01_231">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ShelfF_01</uri>
+      </include>
+      <pose>-6.5 -31.5 0 0 0 0</pose>
+    </model>
+
+    <model name="ShelfF_01_232">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ShelfF_01</uri>
+      </include>
+      <pose>-6.5 -11.5 0 0 0 0</pose>
+    </model>
+
+    <model name="ShelfF_01_233">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ShelfF_01</uri>
+      </include>
+      <pose>-6.5 11.5 0 0 0 0</pose>
+    </model>
+
+    <model name="ShelfF_01_234">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ShelfF_01</uri>
+      </include>
+      <pose>-6.5 31.5 0 0 0 0</pose>
+    </model>
+
+
+    <!-- Third row -->
+    <model name="ShelfF_01_311">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ShelfF_01</uri>
+      </include>
+      <pose>6.5 -30 0 0 0 0</pose>
+    </model>
+
+    <model name="ShelfF_01_312">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ShelfF_01</uri>
+      </include>
+      <pose>6.5 -10 0 0 0 0</pose>
+    </model>
+
+    <model name="ShelfF_01_313">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ShelfF_01</uri>
+      </include>
+      <pose>6.5 10 0 0 0 0</pose>
+    </model>
+
+    <model name="ShelfF_01_314">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ShelfF_01</uri>
+      </include>
+      <pose>6.5 30 0 0 0 0</pose>
+    </model>
+
+    <model name="ShelfF_01_321">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ShelfF_01</uri>
+      </include>
+      <pose>9.5 -30 0 0 0 0</pose>
+    </model>
+
+    <model name="ShelfF_01_322">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ShelfF_01</uri>
+      </include>
+      <pose>9.5 -10 0 0 0 0</pose>
+    </model>
+
+    <model name="ShelfF_01_323">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ShelfF_01</uri>
+      </include>
+      <pose>9.5 10 0 0 0 0</pose>
+    </model>
+
+    <model name="ShelfF_01_324">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ShelfF_01</uri>
+      </include>
+      <pose>9.5 30 0 0 0 0</pose>
+    </model>
+
+    <model name="ShelfF_01_331">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ShelfF_01</uri>
+      </include>
+      <pose>12.5 -30 0 0 0 0</pose>
+    </model>
+
+    <model name="ShelfF_01_332">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ShelfF_01</uri>
+      </include>
+      <pose>12.5 -10 0 0 0 0</pose>
+    </model>
+
+    <model name="ShelfF_01_333">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ShelfF_01</uri>
+      </include>
+      <pose>12.5 10 0 0 0 0</pose>
+    </model>
+
+    <model name="ShelfF_01_334">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ShelfF_01</uri>
+      </include>
+      <pose>12.5 30 0 0 0 0</pose>
+    </model>
+
+
+
+
+    <!-- Charge cell 1 -->
+    <model name="ClutteringA_01_111">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringA_01</uri>
+      </include>
+      <pose>27.3 -30.45 0 0 0 0</pose>
+    </model>
+
+    <model name="ClutteringC_01_112">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringC_01</uri>
+      </include>
+      <pose>33.9 -30.45 0 0 0 0</pose>
+    </model>
+
+    <model name="ClutteringD_01_113">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringD_01</uri>
+      </include>
+      <pose>40.5 -30.45 0 0 0 0</pose>
+    </model>
+
+
+    <model name="ClutteringA_01_121">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringA_01</uri>
+      </include>
+      <pose>27.3 -26.35 0 0 0 0</pose>
+    </model>
+
+    <model name="ClutteringC_01_122">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringD_01</uri>
+      </include>
+      <pose>33.9 -26.35 0 0 0 0</pose>
+    </model>
+
+    <model name="ClutteringD_01_123">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringC_01</uri>
+      </include>
+      <pose>40.5 -26.35 0 0 0 0</pose>
+    </model>
+
+
+    <model name="ClutteringA_01_131">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringC_01</uri>
+      </include>
+      <pose>27.3 -22.25 0 0 0 0</pose>
+    </model>
+
+    <model name="ClutteringC_01_132">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringD_01</uri>
+      </include>
+      <pose>33.9 -22.25 0 0 0 0</pose>
+    </model>
+
+    <model name="ClutteringD_01_133">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringA_01</uri>
+      </include>
+      <pose>40.5 -22.25 0 0 0 0</pose>
+    </model>
+
+
+
+    <!-- Charge cell 2 -->
+    <model name="ClutteringA_01_211">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringA_01</uri>
+      </include>
+      <pose>27.3 -13.15 0 0 0 0</pose>
+    </model>
+
+    <model name="ClutteringC_01_212">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringC_01</uri>
+      </include>
+      <pose>33.9 -13.15 0 0 0 0</pose>
+    </model>
+
+    <model name="ClutteringD_01_213">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringD_01</uri>
+      </include>
+      <pose>40.5 -13.15 0 0 0 0</pose>
+    </model>
+
+
+    <model name="ClutteringA_01_221">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringA_01</uri>
+      </include>
+      <pose>27.3 -9.05 0 0 0 0</pose>
+    </model>
+
+    <model name="ClutteringC_01_222">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringD_01</uri>
+      </include>
+      <pose>33.9 -9.05 0 0 0 0</pose>
+    </model>
+
+    <model name="ClutteringD_01_223">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringC_01</uri>
+      </include>
+      <pose>40.5 -9.05 0 0 0 0</pose>
+    </model>
+
+
+    <model name="ClutteringA_01_231">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringC_01</uri>
+      </include>
+      <pose>27.3 -4.95 0 0 0 0</pose>
+    </model>
+
+    <model name="ClutteringC_01_232">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringD_01</uri>
+      </include>
+      <pose>33.9 -4.95 0 0 0 0</pose>
+    </model>
+
+    <model name="ClutteringD_01_233">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringA_01</uri>
+      </include>
+      <pose>40.5 -4.95 0 0 0 0</pose>
+    </model>
+
+
+
+    <!-- Charge cell 3 -->
+    <model name="ClutteringA_01_311">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringA_01</uri>
+      </include>
+      <pose>27.3 4.15 0 0 0 0</pose>
+    </model>
+
+    <model name="ClutteringC_01_312">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringC_01</uri>
+      </include>
+      <pose>33.9 4.15 0 0 0 0</pose>
+    </model>
+
+    <model name="ClutteringD_01_313">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringD_01</uri>
+      </include>
+      <pose>40.5 4.15 0 0 0 0</pose>
+    </model>
+
+
+    <model name="ClutteringA_01_321">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringA_01</uri>
+      </include>
+      <pose>27.3 8.25 0 0 0 0</pose>
+    </model>
+
+    <model name="ClutteringC_01_322">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringD_01</uri>
+      </include>
+      <pose>33.9 8.25 0 0 0 0</pose>
+    </model>
+
+    <model name="ClutteringD_01_323">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringC_01</uri>
+      </include>
+      <pose>40.5 8.25 0 0 0 0</pose>
+    </model>
+
+
+    <model name="ClutteringA_01_331">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringC_01</uri>
+      </include>
+      <pose>27.3 12.35 0 0 0 0</pose>
+    </model>
+
+    <model name="ClutteringC_01_332">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringD_01</uri>
+      </include>
+      <pose>33.9 12.35 0 0 0 0</pose>
+    </model>
+
+    <model name="ClutteringD_01_333">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringA_01</uri>
+      </include>
+      <pose>40.5 12.35 0 0 0 0</pose>
+    </model>
+
+
+
+
+    <!-- Charge cell 4 -->
+    <model name="ClutteringA_01_411">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringA_01</uri>
+      </include>
+      <pose>27.3 21.45 0 0 0 0</pose>
+    </model>
+
+    <model name="ClutteringC_01_412">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringC_01</uri>
+      </include>
+      <pose>33.9 21.45 0 0 0 0</pose>
+    </model>
+
+    <model name="ClutteringD_01_413">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringD_01</uri>
+      </include>
+      <pose>40.5 21.45 0 0 0 0</pose>
+    </model>
+
+
+    <model name="ClutteringA_01_421">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringA_01</uri>
+      </include>
+      <pose>27.3 25.55 0 0 0 0</pose>
+    </model>
+
+    <model name="ClutteringC_01_422">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringD_01</uri>
+      </include>
+      <pose>33.9 25.55 0 0 0 0</pose>
+    </model>
+
+    <model name="ClutteringD_01_423">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringC_01</uri>
+      </include>
+      <pose>40.5 25.55 0 0 0 0</pose>
+    </model>
+
+
+    <model name="ClutteringA_01_431">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringC_01</uri>
+      </include>
+      <pose>27.3 29.65 0 0 0 0</pose>
+    </model>
+
+    <model name="ClutteringC_01_432">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringD_01</uri>
+      </include>
+      <pose>33.9 29.65 0 0 0 0</pose>
+    </model>
+
+    <model name="ClutteringD_01_433">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ClutteringA_01</uri>
+      </include>
+      <pose>40.5 29.65 0 0 0 0</pose>
+    </model>
+
+
+
+   <!-- Blocking shelf -->
+    <model name="ShelfD_01_1">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ShelfD_01</uri>
+      </include>
+      <pose>-26 40.75 0 0 0 0</pose>
+    </model>
+
+    <model name="ShelfD_01_2">
+      <include>
+        <uri>model://aws_robomaker_warehouse_ShelfD_01</uri>
+      </include>
+      <pose>-18 40.75 0 0 0 0</pose>
+    </model>
+
+
+
+
+
+
+    <!-- Ground plane model -->
+    <model name="GroundB_01_001">
+      <include>
+        <uri>model://aws_robomaker_warehouse_GroundB_01</uri>
+      </include>
+      <pose>7 0 -0.090092 0 0 0</pose>
+    </model>
+
+  </world>
+</sdf>

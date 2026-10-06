@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ASP Project | Relazione tecnica</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #172b3a;
+      --muted: #526875;
+      --line: #c9d6d9;
+      --paper: #ffffff;
+      --wash: #edf4f2;
+      --teal: #087f79;
+      --amber: #c45a26;
+      --blue: #285a78;
+    }
+    * { box-sizing: border-box; }
+    @page { size: A4; margin: 11mm 14mm 12mm; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "DejaVu Sans", "Liberation Sans", sans-serif;
+      font-size: 9.1pt;
+      line-height: 1.42;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .page {
+      min-height: 266mm;
+      position: relative;
+      page-break-after: always;
+      break-after: page;
+      padding-bottom: 9mm;
+    }
+    .page:last-child { page-break-after: auto; break-after: auto; }
+    .eyebrow {
+      color: var(--teal);
+      font-size: 8pt;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { font-size: 35pt; line-height: 1.04; margin: 12mm 0 5mm; max-width: 150mm; }
+    h2 { font-size: 20pt; line-height: 1.15; margin: 2mm 0 5mm; }
+    h3 { font-size: 10.7pt; margin: 4mm 0 1.6mm; }
+    p { margin-bottom: 2.5mm; }
+    .lede { color: var(--muted); font-size: 12pt; max-width: 155mm; }
+    .rule { border: 0; border-top: 1px solid var(--line); margin: 6mm 0; }
+    .band { background: var(--wash); border-left: 3px solid var(--teal); padding: 4mm 5mm; }
+    .warning { background: #fbf1e9; border-left-color: var(--amber); }
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3mm; margin: 9mm 0; }
+    .stat { border-top: 2px solid var(--teal); padding-top: 3mm; }
+    .stat strong { display: block; font-size: 19pt; line-height: 1.05; }
+    .stat span { color: var(--muted); font-size: 8pt; }
+    .flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3mm; margin: 7mm 0; align-items: stretch; }
+    .flow div { border: 1px solid var(--line); padding: 4mm; min-height: 27mm; background: #fff; }
+    .flow strong { display: block; color: var(--blue); margin-bottom: 1mm; }
+    .flow small { color: var(--muted); }
+    .arrow { text-align: center; color: var(--teal); font-size: 16pt; margin: 0; }
+    .tree { background: #f4f7f6; border: 1px solid var(--line); padding: 5mm; font: 8.2pt/1.48 "DejaVu Sans Mono", monospace; white-space: pre-wrap; }
+    table { width: 100%; border-collapse: collapse; margin: 3mm 0 5mm; font-size: 8.7pt; }
+    th { background: var(--ink); color: white; text-align: left; font-weight: 700; }
+    th, td { padding: 1.9mm 2.5mm; border: 1px solid var(--line); vertical-align: top; }
+    tr:nth-child(even) td { background: #f4f7f6; }
+    code { font: 8.2pt "DejaVu Sans Mono", monospace; background: #edf2f3; padding: .3mm 1mm; overflow-wrap: anywhere; }
+    .columns { display: grid; grid-template-columns: 1fr 1fr; gap: 7mm; }
+    ul, ol { margin: 2mm 0 4mm; padding-left: 6mm; }
+    li { margin: 1.2mm 0; }
+    .steps { counter-reset: step; list-style: none; padding: 0; }
+    .steps li { counter-increment: step; display: grid; grid-template-columns: 9mm 1fr; gap: 2mm; margin: 3mm 0; }
+    .steps li::before { content: counter(step, decimal-leading-zero); color: var(--teal); font-weight: 700; }
+    .command { background: #172b3a; color: #f3f7f5; padding: 3mm 4mm; margin: 2mm 0; font: 8.5pt/1.5 "DejaVu Sans Mono", monospace; }
+    .small { color: var(--muted); font-size: 8pt; }
+    .footer { position: absolute; bottom: 0; left: 0; right: 0; border-top: 1px solid var(--line); padding-top: 2mm; color: var(--muted); font-size: 7.5pt; display: flex; justify-content: space-between; }
+    .tag { display: inline-block; border: 1px solid var(--teal); color: var(--teal); padding: 1mm 2mm; font-size: 7.5pt; font-weight: 700; margin: 0 1mm 1mm 0; }
+    .topic { color: var(--teal); font-weight: 700; }
+    @media screen {
+      body { background: #e7eceb; }
+      .page { width: 210mm; margin: 8mm auto; padding: 15mm 16mm 17mm; background: white; box-shadow: 0 2mm 8mm #172b3a20; }
+    }
+  </style>
+</head>
+<body>
+  <section class="page">
+    <div class="eyebrow">ASP Project · relazione tecnica</div>
+    <h1>Simulazione drone in ambiente warehouse</h1>
+    <p class="lede">Architettura, contenuti del repository, collegamento PX4–Gazebo–ROS 2, procedura di decollo e ottimizzazioni della simulazione.</p>
+    <div class="stats">
+      <div class="stat"><strong>3</strong><span>servizi Docker Compose</span></div>
+      <div class="stat"><strong>71</strong><span>istanze warehouse incluse</span></div>
+      <div class="stat"><strong>10 Hz</strong><span>pubblicazione setpoint</span></div>
+      <div class="stat"><strong>1.0×</strong><span>fattore tempo configurato</span></div>
+    </div>
+    <hr class="rule">
+    <h3>In breve</h3>
+    <p>Il progetto integra PX4 SITL con Gazebo Harmonic e un mondo di magazzino composto da modelli locali. Un container ROS 2 Humble ospita Micro XRCE-DDS Agent e gli strumenti applicativi; il package <code>warehouse_bringup</code> fornisce un launch configurabile e un nodo di esempio che richiede la modalità Offboard, arma il drone e mantiene un setpoint a un metro sopra la posizione iniziale.</p>
+    <div class="flow">
+      <div><strong>PX4 SITL</strong><small>Autopilota e modello x500_depth</small></div>
+      <div><strong>Gazebo Harmonic</strong><small>Fisica, sensori e mondo warehouse</small></div>
+      <div><strong>XRCE-DDS Agent</strong><small>Trasporto PX4 ↔ ROS 2 su UDP 8888</small></div>
+      <div><strong>ROS 2 Humble</strong><small>Bridge, bringup e comando Offboard</small></div>
+    </div>
+    <div class="band warning"><strong>Nota sulle prestazioni.</strong> La configurazione attuale non imposta una simulazione più veloce del tempo reale: nel file SDF il target è <code>real_time_factor=1.0</code>. L’esecuzione headless e la GUI separata riducono il carico grafico e possono migliorare la fluidità, ma il fattore ottenuto va misurato a runtime.</div>
+    <p class="small" style="margin-top:7mm">Documento basato sullo stato dei file presenti nel workspace al 4 ottobre 2026. Descrive comportamenti configurati nel codice; non certifica l’esecuzione o il collaudo su hardware.</p>
+    <div class="footer"><span>ASP Project · documentazione dello stato corrente</span><span>01</span></div>
+  </section>
+
+  <section class="page">
+    <div class="eyebrow">01 / Organizzazione</div>
+    <h2>Struttura del progetto</h2>
+    <p>Il repository separa l’orchestrazione Docker, l’immagine degli strumenti ROS, gli asset di simulazione e il workspace colcon. Le mesh e le texture restano file di risorsa: non sono codice ROS e vengono montate nel container del simulatore.</p>
+    <div class="tree">ASP_project/
+├── docker-compose.yml              # servizi sim, dev e agent
+├── docker/
+│   └── ros/
+│       ├── Dockerfile               # immagine ROS 2 + dipendenze PX4/Gazebo
+│       └── entrypoint.sh             # setup degli overlay ROS
+├── gazebo/
+│   ├── worlds/warehouse_px4.sdf      # fisica e layout del magazzino
+│   ├── models/                       # modelli, SDF, mesh e materiali
+│   └── x500/                         # modello Gazebo x500 disponibile localmente
+├── ros2_ws/
+│   ├── scripts/                      # spazio per script del workspace
+│   └── src/warehouse_bringup/
+│       ├── launch/sim_bringup.launch.py
+│       ├── warehouse_bringup/takeoff_1m.py
+│       ├── package.xml
+│       ├── setup.py / setup.cfg
+│       └── resource/warehouse_bringup
+├── scripts/start.sh                  # avvio, arresto, stato e GUI
+└── docs/relazione_progetto.html      # sorgente modificabile di questo PDF</div>
+    <div class="columns">
+      <div>
+        <h3>Immagine ROS</h3>
+        <p><code>docker/ros/Dockerfile</code> parte da <code>ros:humble-ros-base</code>, installa gli strumenti di build e clona Micro XRCE-DDS Agent e <code>px4_msgs</code>. Con <code>WITH_GZ=1</code> (default) aggiunge Gazebo Harmonic e <code>ros_gz_bridge</code>. I riferimenti dell’agent e dei messaggi sono controllabili dagli ARG.</p>
+      </div>
+      <div>
+        <h3>Package ROS 2</h3>
+        <p><code>warehouse_bringup</code> è un package Python ament. Le dipendenze runtime includono launch/launch_ros, <code>ros_gz_bridge</code>, <code>rclpy</code> e <code>px4_msgs</code>. <code>setup.py</code> espone l’eseguibile ROS <code>takeoff_1m</code>.</p>
+      </div>
+    </div>
+    <div class="band"><strong>Overlay.</strong> L’entrypoint carica in sequenza ROS Humble e <code>/deps_ws/install</code>; se esiste, carica anche <code>/ws/install</code>. Il bind mount <code>./ros2_ws/src:/ws/src</code> rende visibili nel container le modifiche locali ai package.</div>
+    <div class="footer"><span>ASP Project · struttura e dipendenze</span><span>02</span></div>
+  </section>
+
+  <section class="page">
+    <div class="eyebrow">02 / Simulazione</div>
+    <h2>PX4, Gazebo e warehouse</h2>
+    <p>Il servizio <code>sim</code> usa l’immagine <code>px4io/px4-sitl-gazebo:latest</code>, seleziona <code>gz_x500_depth</code> e carica il world <code>warehouse_px4</code>. La posa iniziale predefinita è <code>-19,35,0,0,0,0</code> ed è sovrascrivibile tramite la variabile d’ambiente <code>PX4_GZ_MODEL_POSE</code>.</p>
+    <table>
+      <thead><tr><th>Parametro</th><th>Configurazione</th><th>Effetto pratico</th></tr></thead>
+      <tbody>
+        <tr><td>Fisica SDF</td><td><code>ode</code>, <code>max_step_size=0.004</code></td><td>Passo temporale di 4 ms, equivalente a 250 step/s.</td></tr>
+        <tr><td>Velocità simulata</td><td><code>real_time_factor=1.0</code></td><td>Target pari al tempo reale, non un’accelerazione temporale.</td></tr>
+        <tr><td>Aggiornamento</td><td><code>real_time_update_rate=250</code></td><td>Coerente con 1 / 0,004 s per passo.</td></tr>
+        <tr><td>Rendering server</td><td><code>HEADLESS=1</code></td><td>Il server non avvia la GUI; riduce il lavoro grafico sul processo di simulazione.</td></tr>
+        <tr><td>Partizione Gazebo</td><td><code>GZ_PARTITION=warehouse</code></td><td>Isola e allinea i nodi Gazebo che comunicano tra host e container.</td></tr>
+        <tr><td>Rete e GPU</td><td>network host; <code>/dev/dri</code> esposto</td><td>Comunicazione diretta sull’host e disponibilità del device grafico al container.</td></tr>
+      </tbody>
+    </table>
+    <h3>Composizione del mondo</h3>
+    <p>Il file <code>warehouse_px4.sdf</code> contiene il piano base e 71 istanze incluse, disposte tramite pose esplicite. Conteggio delle famiglie presenti nel world:</p>
+    <table>
+      <thead><tr><th>Famiglia</th><th>Istanze</th><th>Uso</th></tr></thead>
+      <tbody>
+        <tr><td>ShelfF</td><td>32</td><td>Scaffalature principali, distribuite in file e posizioni nominate.</td></tr>
+        <tr><td>Cluttering A / C / D</td><td>12 ciascuna</td><td>Ostacoli e oggetti di ingombro tra gli scaffali.</td></tr>
+        <tr><td>ShelfD</td><td>2</td><td>Elementi aggiuntivi di scaffalatura.</td></tr>
+        <tr><td>GroundB</td><td>1</td><td>Elemento warehouse a pavimento.</td></tr>
+      </tbody>
+    </table>
+    <p class="small">Nel conteggio SDF ci sono 72 dichiarazioni <code>&lt;model&gt;</code>: il piano base più 71 riferimenti <code>model://</code>. Bucket, ShelfE e TrashCanC sono anche montati nel container, ma non risultano inclusi nel world attuale. PX4 aggiunge il drone all’avvio.</p>
+    <div class="band">Ogni cartella modello contiene tipicamente <code>model.config</code>, <code>model.sdf</code> e mesh visuali/collisioni in formato DAE; alcune famiglie includono materiali e texture. Le directory sono montate in sola lettura sotto <code>/opt/px4-gazebo/share/gz/models</code>.</div>
+    <div class="footer"><span>ASP Project · ambiente e parametri fisici</span><span>03</span></div>
+  </section>
+
+  <section class="page">
+    <div class="eyebrow">03 / Comunicazione</div>
+    <h2>Bridge e avvio ROS 2</h2>
+    <p>Il servizio <code>agent</code> esegue <code>MicroXRCEAgent udp4 -p 8888</code>. Con rete host, PX4 SITL e i nodi ROS possono scambiare i messaggi uORB esposti da <code>px4_msgs</code> tramite il trasporto DDS-XRCE. Il servizio <code>dev</code> offre la shell interattiva ROS 2 sullo stesso network namespace.</p>
+    <h3>Launch configurabile</h3>
+    <p><code>sim_bringup.launch.py</code> abilita opzionalmente bridge, camera e nodo takeoff. Valori predefiniti: <code>sim=true</code>, <code>world=warehouse_px4</code>, <code>model=x500_depth_0</code>, <code>takeoff=false</code>, <code>camera=false</code>.</p>
+    <table>
+      <thead><tr><th>Origine Gazebo</th><th>Topic ROS</th><th>Messaggio ROS</th><th>Abilitazione</th></tr></thead>
+      <tbody>
+        <tr><td><code>/clock</code></td><td><span class="topic">/clock</span></td><td><code>rosgraph_msgs/msg/Clock</code></td><td>Quando <code>sim=true</code></td></tr>
+        <tr><td>sensore IMU del link drone</td><td><span class="topic">/imu/data</span></td><td><code>sensor_msgs/msg/Imu</code></td><td>Quando <code>sim=true</code></td></tr>
+        <tr><td>sensore IMX214: <code>image</code></td><td><span class="topic">/camera/image_raw</span></td><td><code>sensor_msgs/msg/Image</code></td><td><code>sim=true</code> e <code>camera=true</code></td></tr>
+        <tr><td>sensore IMX214: <code>camera_info</code></td><td><span class="topic">/camera/camera_info</span></td><td><code>sensor_msgs/msg/CameraInfo</code></td><td><code>sim=true</code> e <code>camera=true</code></td></tr>
+      </tbody>
+    </table>
+    <h3>Flusso dei dati</h3>
+    <div class="flow">
+      <div><strong>Sensori Gazebo</strong><small>Clock, IMU e camera opzionale</small></div>
+      <div><strong>ros_gz_bridge</strong><small>Conversione messaggi e remapping topic</small></div>
+      <div><strong>Nodi ROS 2</strong><small>Consumatori applicativi e launch</small></div>
+      <div><strong>PX4 via XRCE</strong><small>Stato in uscita e comandi/setpoint in ingresso</small></div>
+    </div>
+    <p>Se <code>sim=false</code>, il launch non crea il bridge Gazebo. Questa opzione, da sola, non configura un driver o una connessione a un drone reale: il package è predisposto a separare quel bridge, ma l’integrazione hardware non è descritta né verificata dai file esaminati.</p>
+    <div class="band">Il bridge camera è disattivato per default: riduce traffico e consumo quando non serve elaborazione visiva. L’attivazione resta esplicita con <code>camera:=true</code>.</div>
+    <div class="footer"><span>ASP Project · topic e flusso dei messaggi</span><span>04</span></div>
+  </section>
+
+  <section class="page">
+    <div class="eyebrow">04 / Controllo</div>
+    <h2>Takeoff Offboard a un metro</h2>
+    <p>Il nodo <code>takeoff_1m</code> è un esempio di controllo posizione tramite interfaccia Offboard PX4. Non parte automaticamente: il launch dichiara <code>takeoff=false</code> per default, quindi va richiesto consapevolmente.</p>
+    <ol class="steps">
+      <li><span><strong>Attende una stima locale valida.</strong> Si sottoscrive a <code>/fmu/out/vehicle_local_position_v1</code> con QoS best-effort e acquisisce una sola volta la posizione iniziale quando <code>xy_valid</code> e <code>z_valid</code> sono veri.</span></li>
+      <li><span><strong>Pubblica heartbeat e setpoint.</strong> Un timer ogni 0,1 s (10 Hz) invia <code>OffboardControlMode</code> con controllo posizione e <code>TrajectorySetpoint</code> verso <code>/fmu/in/...</code>.</span></li>
+      <li><span><strong>Richiede Offboard.</strong> Dopo almeno 10 pubblicazioni preliminari, invia <code>VEHICLE_CMD_DO_SET_MODE</code> con i parametri di modalità Offboard. Le richieste vengono ripetute al massimo una volta al secondo finché lo stato conferma la modalità.</span></li>
+      <li><span><strong>Richiede l’armamento.</strong> Quando PX4 segnala Offboard attivo, invia <code>VEHICLE_CMD_COMPONENT_ARM_DISARM</code> con armamento abilitato, ripetendo con intervallo di un secondo finché riceve conferma.</span></li>
+      <li><span><strong>Mantiene la quota.</strong> Continua a inviare lo stesso setpoint e registra una sola volta che il drone è armato e il target viene mantenuto.</span></li>
+    </ol>
+    <div class="band"><strong>Convenzione verticale.</strong> PX4 usa coordinate locali NED: l’asse Z cresce verso il basso. Per salire di 1 m il codice imposta <code>z_target = z_start - 1.0</code>, lasciando X e Y sulla posizione iniziale.</div>
+    <h3>Topic e QoS</h3>
+    <table>
+      <thead><tr><th>Direzione</th><th>Topic</th><th>Scopo</th></tr></thead>
+      <tbody>
+        <tr><td>ROS → PX4</td><td><code>/fmu/in/offboard_control_mode</code></td><td>Indica il tipo di setpoint e mantiene attiva la modalità esterna.</td></tr>
+        <tr><td>ROS → PX4</td><td><code>/fmu/in/trajectory_setpoint</code></td><td>Target posizione; velocità, accelerazione, jerk e yaw sono NaN.</td></tr>
+        <tr><td>ROS → PX4</td><td><code>/fmu/in/vehicle_command</code></td><td>Richieste di cambio modalità e armamento.</td></tr>
+        <tr><td>PX4 → ROS</td><td><code>/fmu/out/vehicle_local_position_v1</code></td><td>Posizione locale e flag di validità.</td></tr>
+        <tr><td>PX4 → ROS</td><td><code>/fmu/out/vehicle_status_v4</code></td><td>Conferma stato Offboard e armamento.</td></tr>
+      </tbody>
+    </table>
+    <p class="small">Il timer usa il clock del nodo e i timestamp dei messaggi sono espressi in microsecondi. Le richieste sono considerate riuscite quando cambia lo stato osservato, non sulla sola pubblicazione del comando.</p>
+    <div class="band warning"><strong>Limite di sicurezza.</strong> Questo nodo è dimostrativo: non implementa atterraggio, disarmo, timeout di perdita posizione, controllo ostacoli o gestione esplicita dei rifiuti PX4. Non sostituisce una procedura operativa validata su velivolo reale.</div>
+    <div class="footer"><span>ASP Project · comportamento del nodo di controllo</span><span>05</span></div>
+  </section>
+
+  <section class="page">
+    <div class="eyebrow">05 / Operatività e stato</div>
+    <h2>Avvio, prestazioni e verifiche</h2>
+    <h3>Script di orchestrazione</h3>
+    <p><code>scripts/start.sh</code> offre i comandi <code>start</code>, <code>stop</code>, <code>restart</code> e <code>status</code>, oltre a <code>--no-gui</code> e <code>--no-shell</code>. Prima dell’avvio controlla Docker Compose e la presenza del world. Avvia in background <code>sim</code> e <code>agent</code>, poi attende i topic del world e lo spawn del modello. La GUI Gazebo, quando richiesta e disponibile sull’host, viene avviata separatamente con <code>gz sim -g</code>. Infine apre una shell nel servizio <code>dev</code>.</p>
+    <div class="command">scripts/start.sh start<br>scripts/start.sh start --no-gui<br>scripts/start.sh status<br>scripts/start.sh stop</div>
+    <p>Dentro la shell ROS, una sequenza tipica per compilare e avviare il bringup è:</p>
+    <div class="command">source /opt/ros/humble/setup.bash<br>colcon build --symlink-install<br>source install/setup.bash<br>ros2 launch warehouse_bringup sim_bringup.launch.py</div>
+    <p>Per attivare il decollo di esempio e il bridge camera, aggiungere <code>takeoff:=true camera:=true</code> al comando di launch. L’avvio grafico dell’host è controllabile in modo indipendente dal server headless.</p>
+    <h3>In che senso è stata “accelerata”</h3>
+    <table>
+      <thead><tr><th>Intervento presente</th><th>Che cosa migliora</th><th>Che cosa non garantisce</th></tr></thead>
+      <tbody>
+        <tr><td>Gazebo server con <code>HEADLESS=1</code></td><td>Evita rendering e GUI nel container; riduce contesa CPU/GPU e overhead grafico.</td><td>Non cambia da solo la velocità del tempo simulato.</td></tr>
+        <tr><td>GUI sul PC host, avviabile separatamente</td><td>Il rendering non è accoppiato al ciclo di vita del processo server; <code>--no-gui</code> elimina anche quel carico.</td><td>Non imposta un RTF superiore a 1.</td></tr>
+        <tr><td>Passo 4 ms e update rate 250 Hz</td><td>Fissa una discretizzazione coerente per la dinamica configurata.</td><td>È una frequenza di simulazione target, non un moltiplicatore di velocità.</td></tr>
+      </tbody>
+    </table>
+    <div class="band warning"><strong>Conclusione verificabile:</strong> il progetto è ottimizzato per alleggerire l’esecuzione e può quindi raggiungere più facilmente il tempo reale; non contiene al momento una configurazione di accelerazione temporale oltre il tempo reale. <code>status</code> legge il valore runtime di <code>real_time_factor</code> dal topic <code>/stats</code>, che è il controllo da usare dopo l’avvio.</div>
+    <h3>Stato e prossimi collaudi utili</h3>
+    <p>Nel workspace sono presenti l’orchestrazione, i modelli warehouse, il world, la definizione del package, il bridge configurabile e il nodo di takeoff. Per una verifica completa restano da eseguire build dell’immagine, avvio in ambiente, compilazione colcon, controllo topic/stati PX4 e misura del RTF sotto carico. Non è stato possibile ricostruire una cronologia Git: la cartella di lavoro non risulta un repository Git.</p>
+    <p class="small">Riferimenti principali nel progetto: <code>docker-compose.yml</code>, <code>docker/ros/Dockerfile</code>, <code>docker/ros/entrypoint.sh</code>, <code>scripts/start.sh</code>, <code>gazebo/worlds/warehouse_px4.sdf</code> e i file del package <code>ros2_ws/src/warehouse_bringup</code>.</p>
+    <div class="footer"><span>ASP Project · procedure e limiti accertati</span><span>06</span></div>
+  </section>
+</body>
+</html>

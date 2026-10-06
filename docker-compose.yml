@@ -1,0 +1,47 @@
+services:
+  sim:
+    image: px4io/px4-sitl-gazebo:latest
+    network_mode: host
+    environment:
+      PX4_SIM_MODEL: gz_x500_depth
+      PX4_GZ_MODEL_POSE: ${PX4_GZ_MODEL_POSE:--19,35,0,0,0,0}
+      PX4_GZ_WORLD: warehouse_px4
+      PX4_PARAM_COM_RC_IN_MODE: "4"
+      PX4_PARAM_COM_ARM_ODID: "0"
+      PX4_PARAM_NAV_DLL_ACT: "0"
+      HEADLESS: "1"
+      GZ_PARTITION: warehouse
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./gazebo/worlds/warehouse_px4.sdf:/opt/px4-gazebo/share/gz/worlds/warehouse_px4.sdf:ro
+      - ./gazebo/models/aws_robomaker_warehouse_Bucket_01:/opt/px4-gazebo/share/gz/models/aws_robomaker_warehouse_Bucket_01:ro
+      - ./gazebo/models/aws_robomaker_warehouse_ClutteringA_01:/opt/px4-gazebo/share/gz/models/aws_robomaker_warehouse_ClutteringA_01:ro
+      - ./gazebo/models/aws_robomaker_warehouse_ClutteringC_01:/opt/px4-gazebo/share/gz/models/aws_robomaker_warehouse_ClutteringC_01:ro
+      - ./gazebo/models/aws_robomaker_warehouse_ClutteringD_01:/opt/px4-gazebo/share/gz/models/aws_robomaker_warehouse_ClutteringD_01:ro
+      - ./gazebo/models/aws_robomaker_warehouse_GroundB_01:/opt/px4-gazebo/share/gz/models/aws_robomaker_warehouse_GroundB_01:ro
+      - ./gazebo/models/aws_robomaker_warehouse_ShelfD_01:/opt/px4-gazebo/share/gz/models/aws_robomaker_warehouse_ShelfD_01:ro
+      - ./gazebo/models/aws_robomaker_warehouse_ShelfE_01:/opt/px4-gazebo/share/gz/models/aws_robomaker_warehouse_ShelfE_01:ro
+      - ./gazebo/models/aws_robomaker_warehouse_ShelfF_01:/opt/px4-gazebo/share/gz/models/aws_robomaker_warehouse_ShelfF_01:ro
+      - ./gazebo/models/aws_robomaker_warehouse_TrashCanC_01:/opt/px4-gazebo/share/gz/models/aws_robomaker_warehouse_TrashCanC_01:ro
+    devices:
+      - /dev/dri:/dev/dri
+
+  dev:
+    image: warehouse-drone:humble
+    network_mode: host
+    ipc: host
+    environment:
+      GZ_PARTITION: warehouse
+    volumes:
+      - ./ros2_ws/src:/ws/src
+    working_dir: /ws
+    stdin_open: true
+    tty: true
+
+  agent:
+    build: ./docker/ros
+    image: warehouse-drone:humble
+    network_mode: host
+    ipc: host
+    command: MicroXRCEAgent udp4 -p 8888
